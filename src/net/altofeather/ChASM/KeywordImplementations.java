@@ -18,20 +18,26 @@ public class KeywordImplementations extends ExtendableCompiler {
         currentToken = compilerTokens.get(tokenPointer);
         extendingToken = currentToken;
 
-        extentions.put(currentToken, new StackObject(null, () -> true, currentToken));
+        extentions.put(currentToken, new StackObject(() -> true, extendingToken.clone(), "EXTEND"));
+
+        for (char[] key : extentions.keySet()) System.out.println(key);
     }
 
     protected static void _INSERT_NUMBER() {
+
+        System.out.println(extendingToken + " will insert a number");
 
         tokenPointer++;
         currentToken = compilerTokens.get(tokenPointer);
 
         StackObject currentStackObject = extentions.get(extendingToken);
 
-        currentStackObject.pushStack(new StackObject(currentStackObject, () -> {
-            compiledBytecode.add((byte) Integer.parseInt(new String(currentToken)));
+        String value = new String(currentToken);
+
+        currentStackObject.pushStack(() -> {
+            compiledBytecode.add((byte) Integer.parseInt(value));
             return true;
-        }, extendingToken));
+        }, extendingToken, "INSERT_NUMBER");
 
     }
 
@@ -40,27 +46,33 @@ public class KeywordImplementations extends ExtendableCompiler {
         tokenPointer++;
         currentToken = compilerTokens.get(tokenPointer);
 
-        StackObject currentStackObject = extentions.get(extendingToken);
+        StackObject stackObject = extentions.get(extendingToken);
 
-        currentStackObject.pushStack(new StackObject(currentStackObject, () -> {
-            compiledBytecode.add((byte) Integer.parseInt(new String(currentToken), 16));
+        String value = new String(currentToken);
+
+        stackObject.pushStack(() -> {
+            compiledBytecode.add((byte) Integer.parseInt(value, 16));
             return true;
-        }, extendingToken));
+        }, extendingToken, "INSERT_HEX");
 
 
     }
 
     protected static void _INSERT_UTF_8() {
 
+        System.out.println("inserting utf8");
+
         tokenPointer++;
         currentToken = compilerTokens.get(tokenPointer);
 
-        StackObject currentStackObject = extentions.get(extendingToken);
+        StackObject stackObject = extentions.get(extendingToken);
 
-        currentStackObject.pushStack(new StackObject(currentStackObject, () -> {
-            for (char c : currentToken) compiledBytecode.add((byte) c);
+        String value = new String(currentToken);
+
+        stackObject.pushStack(() -> {
+            for (char c : value.toCharArray()) compiledBytecode.add((byte) c);
             return true;
-        }, extendingToken));
+        }, extendingToken, "INSERT_UTF_8");
 
 
     }

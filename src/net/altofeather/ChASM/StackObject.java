@@ -5,7 +5,10 @@ public class StackObject {
     StackObject parent;
     StackObject child;
 
-    char[] token;
+    public char[] token;
+    public String operationName;
+
+    public boolean complete = false;
 
     public interface CB {
         boolean cb();
@@ -13,19 +16,33 @@ public class StackObject {
 
     CB function;
 
-    public StackObject(StackObject parent, CB operation, char[] token) {
-        this.parent = parent;
-        this.parent.child = this;
+    public StackObject(CB operation, char[] token, String operationName) {
         this.token = token;
+        this.function = operation;
+        this.operationName = operationName;
     }
 
-    public void breakStack() {
-        this.parent.child = null;
+    public void unfreeze() {
+        System.out.println("unfreezing");
+        this.complete = false;
+        if (this.parent != null) this.parent.unfreeze();
     }
 
-    public void pushStack(StackObject stackObject) {
-        if (this.child != null) this.child.pushStack(stackObject);
-        else this.child = stackObject;
+    public void pushStack(CB operation, char[] token, String operationName) {
+
+        System.out.println("pushed down the stack once: " + operationName);
+
+        if (this.child != null) this.child.pushStack(operation, token, operationName);
+
+        else {
+            this.child = new StackObject(operation, token, operationName);
+            this.child.parent = this;
+        }
+    }
+
+    public boolean extentionStatus() {
+        if (this.complete && this.child != null) this.child.extentionStatus();
+        return this.complete;
     }
 
     public StackObject getEnd() {
@@ -35,11 +52,19 @@ public class StackObject {
 
     public boolean runOperation() {
 
-        if (this.parent != null) this.parent.runOperation();
+        System.out.println(this.operationName);
 
-        boolean out = this.function.cb();
-        if (out) breakStack();
-        return out;
+        if (!this.complete) {
+            this.complete = this.function.cb();
+            return false;
+        }
+
+        if (this.child == null) {
+            unfreeze();
+            return true;
+        }
+
+        return this.child.runOperation();
 
     }
 
