@@ -59,7 +59,7 @@ public class ExtendableCompiler {
         registerImplementation("INSERT UTF8 ", KeywordImplementations::_INSERT_UTF_8);
         registerImplementation("PRINT ", KeywordImplementations::_PRINT);
 
-        ArrayList<char[]> realTokens = new ArrayList<>(extentions.keySet());
+        ArrayList<char[]> realTokens = new ArrayList<>(operationMap.keySet());
 
         compilerTokens = gatherIdentifiers(realTokens, program);
 
