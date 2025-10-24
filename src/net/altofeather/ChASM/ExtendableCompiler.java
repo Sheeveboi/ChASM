@@ -49,8 +49,6 @@ public class ExtendableCompiler {
     }
 
     public ExtendableCompiler(char[] program) {
-
-        registerImplementation(" ", () -> {});
         registerImplementation(";", () -> {});
 
         registerImplementation("EXTEND ", KeywordImplementations::_EXTEND);
