@@ -73,15 +73,10 @@ public class ExtendableCompiler {
 
         String[] tokenizedProgram = program.split(" ");
 
-        System.out.println(extentions);
-
         for (String token : tokenizedProgram) {
             for (char[] key : extentions.keySet()) {
 
                 if (Arrays.equals(key, token.toCharArray())){
-
-                    System.out.println("running " + key + " on " + token);
-
                     StackObject copiedStackProgram = extentions.get(key);
                     while (!copiedStackProgram.runOperation());
                     break;
