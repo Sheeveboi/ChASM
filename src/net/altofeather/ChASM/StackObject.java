@@ -23,14 +23,11 @@ public class StackObject {
     }
 
     public void unfreeze() {
-        System.out.println("unfreezing");
         this.complete = false;
         if (this.parent != null) this.parent.unfreeze();
     }
 
     public void pushStack(CB operation, char[] token, String operationName) {
-
-        System.out.println("pushed down the stack once: " + operationName);
 
         if (this.child != null) this.child.pushStack(operation, token, operationName);
 
@@ -51,8 +48,6 @@ public class StackObject {
     }
 
     public boolean runOperation() {
-
-        System.out.println(this.operationName);
 
         if (!this.complete) {
             this.complete = this.function.cb();
