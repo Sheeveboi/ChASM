@@ -1,5 +1,6 @@
 package net.altofeather.ChASM;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class KeywordImplementations extends ExtendableCompiler {
@@ -23,9 +24,39 @@ public class KeywordImplementations extends ExtendableCompiler {
         for (char[] key : extentions.keySet()) System.out.println(key);
     }
 
-    protected static void _INSERT_NUMBER() {
+    protected static void _INSERT_FLOAT() {
 
-        System.out.println(extendingToken + " will insert a number");
+        System.out.println(extendingToken + " will insert a float");
+
+        tokenPointer++;
+        currentToken = compilerTokens.get(tokenPointer);
+
+        StackObject currentStackObject = extentions.get(extendingToken);
+
+        String value = new String(currentToken);
+
+        currentStackObject.pushStack(() -> {
+
+            ArrayList<Byte> out = new ArrayList<>();
+
+            //encode value
+            int intBits = Float.floatToIntBits(Float.parseFloat(value));
+
+            out.add((byte) (intBits >> 24));
+            out.add((byte) (intBits >> 16));
+            out.add((byte) (intBits >> 8));
+            out.add((byte) (intBits));
+
+            compiledBytecode.addAll(out);
+
+            return true;
+        }, extendingToken, "INSERT_NUMBER");
+
+    }
+
+    protected static void _INSERT_INTEGER() {
+
+        System.out.println(extendingToken + " will insert an integer");
 
         tokenPointer++;
         currentToken = compilerTokens.get(tokenPointer);
