@@ -52,8 +52,9 @@ public class ExtendableCompiler {
         registerImplementation(";", () -> {});
 
         registerImplementation("EXTEND ", KeywordImplementations::_EXTEND);
-        registerImplementation("INSERT NUMBER ", KeywordImplementations::_INSERT_NUMBER);
-        registerImplementation("INSERT HEX ", KeywordImplementations::_INSERT_HEX);
+        registerImplementation("INSERT FLOAT ", KeywordImplementations::_INSERT_FLOAT);
+        registerImplementation("INSERT INTEGER ", KeywordImplementations::_INSERT_INTEGER);
+        registerImplementation("INSERT HEX 0x", KeywordImplementations::_INSERT_HEX);
         registerImplementation("INSERT UTF8 ", KeywordImplementations::_INSERT_UTF_8);
         registerImplementation("PRINT ", KeywordImplementations::_PRINT);
 
