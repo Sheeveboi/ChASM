@@ -64,7 +64,7 @@ public class ExtendableCompiler {
 
         for (tokenPointer = 0; tokenPointer < compilerTokens.size() - 1; tokenPointer++) {
             char[] token = compilerTokens.get(tokenPointer);
-            operationMap.get(token).cb();
+            if (operationMap.containsKey(token)) operationMap.get(token).cb();
         }
 
     }
