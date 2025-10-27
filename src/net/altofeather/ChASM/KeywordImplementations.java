@@ -20,8 +20,6 @@ public class KeywordImplementations extends ExtendableCompiler {
         extendingToken = currentToken;
 
         extentions.put(currentToken, new StackObject(() -> true, extendingToken.clone(), "EXTEND"));
-
-        for (char[] key : extentions.keySet()) System.out.println(key);
     }
 
     protected static void _INSERT_FLOAT() {
@@ -85,7 +83,6 @@ public class KeywordImplementations extends ExtendableCompiler {
             compiledBytecode.add((byte) Integer.parseInt(value, 16));
             return true;
         }, extendingToken, "INSERT_HEX");
-
 
     }
 
