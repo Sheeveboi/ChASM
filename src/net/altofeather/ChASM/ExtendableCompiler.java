@@ -2,8 +2,6 @@ package net.altofeather.ChASM;
 
 import java.util.*;
 
-import static net.altofeather.ChASM.KeywordImplementations.registerImplementation;
-
 public class ExtendableCompiler {
 
     protected static ArrayList<char[]> compilerTokens = new ArrayList<>();
