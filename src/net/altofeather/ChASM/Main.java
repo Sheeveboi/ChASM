@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws Exception {
         File extention = new File("test.chasm");
         Scanner extentionReader = new Scanner(extention);
         StringBuilder extentionData = new StringBuilder();
