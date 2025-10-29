@@ -21,6 +21,7 @@ public class ExtendableCompiler {
     protected static int tokenPointer;
     protected static int programPointer;
     protected static char[] extendingToken;
+    protected static boolean abstractExtension = false;
 
     public ArrayList<char[]> gatherIdentifiers(ArrayList<char[]> identifiers, char[] program) {
         ArrayList<char[]> newTokens = new ArrayList<>();
