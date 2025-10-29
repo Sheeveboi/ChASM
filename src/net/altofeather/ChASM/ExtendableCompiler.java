@@ -91,17 +91,22 @@ public class ExtendableCompiler {
 
     public ArrayList<Byte> runCompiler(String program) {
 
-        String[] tokenizedProgram = program.split(" ");
+        tokenizedProgram = program.split(" ");
 
-        for (String token : tokenizedProgram) {
-            for (char[] key : extentions.keySet()) {
+        for (programPointer = 0; programPointer < tokenizedProgram.length; programPointer++) {
+
+            String token = tokenizedProgram[programPointer];
+
+            for (char[] key : extensions.keySet()) {
 
                 if (Arrays.equals(key, token.toCharArray())){
-                    StackObject copiedStackProgram = extentions.get(key);
+                    StackObject copiedStackProgram = extensions.get(key);
                     while (!copiedStackProgram.runOperation());
                     break;
                 }
+
             }
+
         }
 
         return compiledBytecode;
