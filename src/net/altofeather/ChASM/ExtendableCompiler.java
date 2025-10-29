@@ -61,12 +61,16 @@ public class ExtendableCompiler {
     public ExtendableCompiler(char[] program) {
         registerImplementation(";", () -> {});
 
-        registerImplementation("EXTEND ", KeywordImplementations::_EXTEND);
-        registerImplementation("INSERT FLOAT ", KeywordImplementations::_INSERT_FLOAT);
-        registerImplementation("INSERT INTEGER ", KeywordImplementations::_INSERT_INTEGER);
-        registerImplementation("INSERT HEX 0x", KeywordImplementations::_INSERT_HEX);
-        registerImplementation("INSERT UTF8 ", KeywordImplementations::_INSERT_UTF_8);
-        registerImplementation("PRINT ", KeywordImplementations::_PRINT);
+        StandardCompiler.registerImplementation(";", () -> {});
+        StandardCompiler.registerImplementation(" ", () -> {});
+
+        StandardCompiler.registerImplementation("ABSTRACT EXTEND ", StandardCompiler::_ABSTRACT_EXTEND);
+        StandardCompiler.registerImplementation("EXTEND ", StandardCompiler::_EXTEND);
+        StandardCompiler.registerImplementation("IMPLY ", StandardCompiler::_IMPLY);
+        StandardCompiler.registerImplementation("INSERT FLOAT ", StandardCompiler::_INSERT_FLOAT);
+        StandardCompiler.registerImplementation("INSERT INTEGER ", StandardCompiler::_INSERT_INTEGER);
+        StandardCompiler.registerImplementation("INSERT HEX ", StandardCompiler::_INSERT_HEX);
+        StandardCompiler.registerImplementation("PRINT ", StandardCompiler::_PRINT);
 
         ArrayList<char[]> realTokens = new ArrayList<>(operationMap.keySet());
 
