@@ -58,8 +58,14 @@ public class ExtendableCompiler {
         return newTokens;
     }
 
-    public ExtendableCompiler(char[] program) {
-        registerImplementation(";", () -> {});
+    public static StackObject getCurrentStackObject() {
+
+        if (!abstractExtension) return extensions.get(extendingToken);
+        return abstractExtensions.get(extendingToken);
+
+    }
+
+    public ExtendableCompiler(char[] program) throws Exception {
 
         StandardCompiler.registerImplementation(";", () -> {});
         StandardCompiler.registerImplementation(" ", () -> {});
