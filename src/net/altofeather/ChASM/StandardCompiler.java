@@ -3,13 +3,14 @@ package net.altofeather.ChASM;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class KeywordImplementations extends ExtendableCompiler {
-    public KeywordImplementations(char[] program) {
+public class StandardCompiler extends ExtendableCompiler {
+
+    public StandardCompiler(char[] program) throws Exception {
         super(program);
     }
 
     public interface StackEdition {
-        void cb();
+        void cb() throws Exception;
     }
 
     protected static void _EXTEND() {
@@ -18,8 +19,22 @@ public class KeywordImplementations extends ExtendableCompiler {
 
         currentToken = compilerTokens.get(tokenPointer);
         extendingToken = currentToken;
+        abstractExtension = false;
 
-        extentions.put(currentToken, new StackObject(() -> true, extendingToken.clone(), "EXTEND"));
+        extensions.put(currentToken, new StackObject(() -> true, extendingToken.clone(), "EXTEND"));
+
+    }
+
+    protected static void _ABSTRACT_EXTEND() {
+
+        tokenPointer++;
+        currentToken = compilerTokens.get(tokenPointer);
+
+        extendingToken = currentToken;
+        abstractExtension = true;
+
+        abstractExtensions.put(currentToken, new StackObject(() -> true, extendingToken.clone(), "ABSTRACT EXTEND"));
+
     }
 
     protected static void _INSERT_FLOAT() {
