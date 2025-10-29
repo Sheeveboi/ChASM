@@ -37,6 +37,24 @@ public class StandardCompiler extends ExtendableCompiler {
 
     }
 
+    protected static void _IMPLY() throws Exception {
+
+        tokenPointer++;
+        currentToken = compilerTokens.get(tokenPointer);
+
+        StackObject currentStackObject = extensions.get(extendingToken);
+        StackObject abstractStackObject = null;
+
+        for (char[] key : abstractExtensions.keySet())
+            if (Arrays.equals(key, currentToken))
+                abstractStackObject = abstractExtensions.get(key);
+
+        if (abstractStackObject == null) throw new Exception("Could not find abstract extensional");
+
+        currentStackObject.pushStack(abstractStackObject);
+
+    }
+
     protected static void _INSERT_FLOAT() {
 
         System.out.println(extendingToken + " will insert a float");
@@ -44,7 +62,7 @@ public class StandardCompiler extends ExtendableCompiler {
         tokenPointer++;
         currentToken = compilerTokens.get(tokenPointer);
 
-        StackObject currentStackObject = extentions.get(extendingToken);
+        StackObject currentStackObject = getCurrentStackObject();
 
         String value = new String(currentToken);
 
@@ -74,7 +92,7 @@ public class StandardCompiler extends ExtendableCompiler {
         tokenPointer++;
         currentToken = compilerTokens.get(tokenPointer);
 
-        StackObject currentStackObject = extentions.get(extendingToken);
+        StackObject currentStackObject = getCurrentStackObject();
 
         String value = new String(currentToken);
 
@@ -90,7 +108,7 @@ public class StandardCompiler extends ExtendableCompiler {
         tokenPointer++;
         currentToken = compilerTokens.get(tokenPointer);
 
-        StackObject stackObject = extentions.get(extendingToken);
+        StackObject stackObject = getCurrentStackObject();
 
         String value = new String(currentToken);
 
@@ -108,7 +126,7 @@ public class StandardCompiler extends ExtendableCompiler {
         tokenPointer++;
         currentToken = compilerTokens.get(tokenPointer);
 
-        StackObject stackObject = extentions.get(extendingToken);
+        StackObject stackObject = getCurrentStackObject();
 
         String value = new String(currentToken);
 
