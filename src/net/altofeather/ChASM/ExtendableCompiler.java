@@ -6,11 +6,11 @@ public class ExtendableCompiler {
 
     protected static ArrayList<char[]> compilerTokens = new ArrayList<>();
 
-    protected static Map<char[], StackObject> extensions = new HashMap<>(); //for front end extensional
-    protected static Map<char[], StackObject> abstractExtensions = new HashMap<>(); //for back end extensional
-    protected static boolean abstractExtension = false;
+    protected static Map<char[], StackObject> extensions = new HashMap<>(); //for front end extensionals
+    protected static Map<char[], StackObject> abstractExtensions = new HashMap<>(); //for back end extensionals
+    protected static Map<char[], ArrayList<char[]>> abstractGroups = new HashMap<>(); //groups back end extensionals to multiple front end extensionals
 
-    protected static Map<char[], StandardCompiler.StackEdition> operationMap = new HashMap<>(); //maps front end extensional to back end operations
+    protected static Map<char[], StandardCompiler.StackEdition> operationMap = new HashMap<>(); //maps front end extensionals to back end operations
 
     protected static ArrayList<Byte> compiledBytecode = new ArrayList<>(); //stores final result
 
