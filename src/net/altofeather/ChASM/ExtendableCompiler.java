@@ -7,11 +7,21 @@ import static net.altofeather.ChASM.KeywordImplementations.registerImplementatio
 public class ExtendableCompiler {
 
     protected static ArrayList<char[]> compilerTokens = new ArrayList<>();
-    protected static Map<char[], StackObject> extentions = new HashMap<>();
-    protected static Map<char[], KeywordImplementations.StackEdition> operationMap = new HashMap<>();
-    protected static ArrayList<Byte> compiledBytecode = new ArrayList<>();
+
+    protected static Map<char[], StackObject> extensions = new HashMap<>(); //for front end extensional
+    protected static Map<char[], StackObject> abstractExtensions = new HashMap<>(); //for back end extensional
+    protected static boolean abstractExtension = false;
+
+    protected static Map<char[], StandardCompiler.StackEdition> operationMap = new HashMap<>(); //maps front end extensional to back end operations
+
+    protected static ArrayList<Byte> compiledBytecode = new ArrayList<>(); //stores final result
+
+    protected static String[] tokenizedProgram; //stores tokenized compile target
+
+    //control variables
     protected static char[] currentToken;
     protected static int tokenPointer;
+    protected static int programPointer;
     protected static char[] extendingToken;
 
     public ArrayList<char[]> gatherIdentifiers(ArrayList<char[]> identifiers, char[] program) {
