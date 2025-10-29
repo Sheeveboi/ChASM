@@ -37,6 +37,16 @@ public class StackObject {
         }
     }
 
+    public void pushStack(StackObject stackObject) {
+
+        if (this.child != null) this.child.pushStack(stackObject);
+
+        else {
+            this.child = stackObject;
+            this.child.parent = this;
+        }
+    }
+
     public boolean extentionStatus() {
         if (this.complete && this.child != null) this.child.extentionStatus();
         return this.complete;
