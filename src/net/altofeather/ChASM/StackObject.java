@@ -1,5 +1,9 @@
 package net.altofeather.ChASM;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 public class StackObject {
 
     StackObject parent;
@@ -9,6 +13,25 @@ public class StackObject {
     public String operationName;
 
     public boolean complete = false;
+
+    static class GatheredToken {
+
+        boolean self = false;
+
+        String tokenName;
+        char[] gatheredToken;
+
+        GatheredToken(String tokenName, char[] gatheredToken) {
+
+            this.tokenName = tokenName;
+            this.gatheredToken = gatheredToken;
+
+        }
+
+    }
+
+    public ArrayList<GatheredToken> gatheredTokens = new ArrayList<>();
+    public int selfIndex = 0;
 
     public interface CB {
         boolean cb();
