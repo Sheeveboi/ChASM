@@ -58,9 +58,23 @@ public class StandardCompiler extends ExtendableCompiler {
             if (Arrays.equals(key, currentToken))
                 abstractStackObject = abstractExtensions.get(key);
 
-        if (abstractStackObject == null) throw new Exception("Could not find abstract extensional");
+        if (abstractStackObject == null) throw new Exception("Could not find abstract extensional.");
 
         currentStackObject.pushStack(abstractStackObject);
+
+    }
+
+    protected static void _AS() throws Exception {
+
+        if (abstractExtension) throw new Exception("Cannot group abstract extensionals to other abstract extensionals.");
+
+        tokenPointer++;
+        currentToken = compilerTokens.get(tokenPointer);
+
+        if (!abstractExtensions.containsKey(currentToken)) throw new Exception("Could not find abstract extensional.");
+
+        if (!abstractGroups.containsKey(currentToken)) abstractGroups.put(currentToken, new ArrayList<>());
+        abstractGroups.get(currentToken).add(extendingToken);
 
     }
 
