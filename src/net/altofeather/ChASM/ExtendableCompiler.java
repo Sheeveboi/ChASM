@@ -72,6 +72,7 @@ public class ExtendableCompiler {
         StandardCompiler.registerImplementation("ABSTRACT EXTEND ", StandardCompiler::_ABSTRACT_EXTEND);
         StandardCompiler.registerImplementation("EXTEND ", StandardCompiler::_EXTEND);
         StandardCompiler.registerImplementation("IMPLY ", StandardCompiler::_IMPLY);
+        StandardCompiler.registerImplementation("AS ", StandardCompiler::_AS);
         StandardCompiler.registerImplementation("INSERT FLOAT ", StandardCompiler::_INSERT_FLOAT);
         StandardCompiler.registerImplementation("INSERT INTEGER ", StandardCompiler::_INSERT_INTEGER);
         StandardCompiler.registerImplementation("INSERT HEX ", StandardCompiler::_INSERT_HEX);
