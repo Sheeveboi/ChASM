@@ -30,7 +30,7 @@ public class StandardCompiler extends ExtendableCompiler {
 
     }
 
-    protected static void _ABSTRACT_EXTEND() {
+    protected static void _ABSTRACT_EXTEND() throws Exception {
 
         tokenPointer++;
         currentToken = compilerTokens.get(tokenPointer);
@@ -51,7 +51,7 @@ public class StandardCompiler extends ExtendableCompiler {
         tokenPointer++;
         currentToken = compilerTokens.get(tokenPointer);
 
-        StackObject currentStackObject = extensions.get(extendingToken);
+        StackObject currentStackObject = getCurrentStackObject();
         StackObject abstractStackObject = null;
 
         for (char[] key : abstractExtensions.keySet())
