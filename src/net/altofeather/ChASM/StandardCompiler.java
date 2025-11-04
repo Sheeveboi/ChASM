@@ -18,8 +18,13 @@ public class StandardCompiler extends ExtendableCompiler {
         tokenPointer++;
 
         currentToken = compilerTokens.get(tokenPointer);
+
         extendingToken = currentToken;
         abstractExtension = false;
+
+        if (extensions.containsKey(currentToken)) throw new Exception(STR."Extensional with name '\{new String(currentToken)}' already exists.");
+
+        if (abstractExtensions.containsKey(currentToken)) throw new Exception(STR."Abstract Extensional with name '\{new String(currentToken)}' already exists.");
 
         extensions.put(currentToken, new StackObject(() -> true, extendingToken.clone(), "EXTEND"));
 
@@ -32,6 +37,10 @@ public class StandardCompiler extends ExtendableCompiler {
 
         extendingToken = currentToken;
         abstractExtension = true;
+
+        if (extensions.containsKey(currentToken)) throw new Exception(STR."Extensional with name '\{new String(currentToken)}' already exists.");
+
+        if (abstractExtensions.containsKey(currentToken)) throw new Exception(STR."Abstract Extensional with name '\{new String(currentToken)}' already exists.");
 
         abstractExtensions.put(currentToken, new StackObject(() -> true, extendingToken.clone(), "ABSTRACT EXTEND"));
 
