@@ -69,6 +69,8 @@ public class ExtendableCompiler {
         StandardCompiler.registerImplementation(";", () -> {});
         StandardCompiler.registerImplementation(" ", () -> {});
 
+        StandardCompiler.registerImplementation("ENFORCE ", StandardCompiler::_ENFORCE);
+
         StandardCompiler.registerImplementation("ABSTRACT EXTEND ", StandardCompiler::_ABSTRACT_EXTEND);
         StandardCompiler.registerImplementation("EXTEND ", StandardCompiler::_EXTEND);
         StandardCompiler.registerImplementation("IMPLY ", StandardCompiler::_IMPLY);
