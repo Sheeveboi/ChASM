@@ -235,7 +235,6 @@ public class StandardCompiler extends ExtendableCompiler {
 
             tokenPointer++;
             currentToken = compilerTokens.get(tokenPointer);
-            sToken = new String(currentToken);
             String sToken = new String(currentToken);
 
             if (Arrays.equals(currentToken, ";".toCharArray())) break;
@@ -246,6 +245,15 @@ public class StandardCompiler extends ExtendableCompiler {
         }
 
         System.out.println(out);
+    }
+
+    protected static void PROGRAM_EXTENSION_NAME() {
+
+        tokenPointer ++;
+        currentToken = compilerTokens.get(tokenPointer);
+
+        ExtendableCompiler.programExtensionName = new String(currentToken);
+
     }
 
     protected static void registerImplementation(String token, Callback callback) {
