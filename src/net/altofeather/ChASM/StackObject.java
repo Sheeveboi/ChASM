@@ -14,6 +14,10 @@ public class StackObject {
 
     public boolean complete = false;
 
+    public boolean abs = false; //is abstract
+    public boolean grouped = false; //is grouped
+    public ArrayList<StackObject> enforcements = new ArrayList<>();
+
     static class GatheredToken {
 
         boolean self = false;
