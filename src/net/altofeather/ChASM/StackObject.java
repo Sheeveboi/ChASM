@@ -87,7 +87,8 @@ public class StackObject {
     public boolean runOperation() throws Exception {
 
         if (!this.complete) {
-            this.complete = this.function.cb();
+            System.out.println(STR."Enforcements: \{this.enforcements}, Token: \{new String(this.token)}, Operation: \{this.operationName}");
+            this.complete = this.function.cb(this);
             return false;
         }
 
