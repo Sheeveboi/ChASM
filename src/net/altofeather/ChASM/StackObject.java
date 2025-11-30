@@ -35,7 +35,6 @@ public class StackObject {
     }
 
     public ArrayList<GatheredToken> gatheredTokens = new ArrayList<>();
-    public int selfIndex = 0;
 
     public interface CB {
         boolean cb(StackObject self) throws Exception;
