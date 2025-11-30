@@ -91,7 +91,7 @@ public class ExtendableCompiler {
 
     }
 
-    public ArrayList<Byte> runCompiler(String program) {
+    public ArrayList<Byte> runCompiler(String program) throws Exception {
 
         tokenizedProgram = program.split(" ");
 

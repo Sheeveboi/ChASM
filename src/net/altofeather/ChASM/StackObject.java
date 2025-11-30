@@ -38,7 +38,7 @@ public class StackObject {
     public int selfIndex = 0;
 
     public interface CB {
-        boolean cb();
+        boolean cb(StackObject self) throws Exception;
     }
 
     CB function;
@@ -84,7 +84,7 @@ public class StackObject {
         return this.child.getEnd();
     }
 
-    public boolean runOperation() {
+    public boolean runOperation() throws Exception {
 
         if (!this.complete) {
             this.complete = this.function.cb();
