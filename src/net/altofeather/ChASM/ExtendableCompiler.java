@@ -10,7 +10,7 @@ public class ExtendableCompiler {
     protected static Map<char[], StackObject> abstractExtensions = new HashMap<>(); //for back end extensionals
     protected static Map<char[], ArrayList<char[]>> abstractGroups = new HashMap<>(); //groups back end extensionals to multiple front end extensionals
 
-    protected static Map<char[], StandardCompiler.StackEdition> operationMap = new HashMap<>(); //maps front end extensionals to back end operations
+    protected static Map<char[], StandardCompiler.Callback> operationMap = new HashMap<>(); //maps front end extensionals to back end operations
 
     protected static ArrayList<Byte> compiledBytecode = new ArrayList<>(); //stores final result
 
