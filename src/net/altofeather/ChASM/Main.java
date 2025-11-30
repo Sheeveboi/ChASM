@@ -14,7 +14,7 @@ public class Main {
 
         ExtendableCompiler e = new ExtendableCompiler(extentionData.toString().toCharArray());
 
-        File program = new File("test.soprano");
+        File program = new File(STR."test.\{ExtendableCompiler.programExtensionName}");
         Scanner programReader = new Scanner(program);
         StringBuilder programData = new StringBuilder();
         while (programReader.hasNextLine()) programData.append(programReader.nextLine());
