@@ -16,6 +16,8 @@ public class ExtendableCompiler {
 
     protected static String[] tokenizedProgram; //stores tokenized compile target
 
+    protected static String programExtensionName;
+
     //control variables
     protected static char[] currentToken;
     protected static int tokenPointer;
