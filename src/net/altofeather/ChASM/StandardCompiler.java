@@ -228,16 +228,23 @@ public class StandardCompiler extends ExtendableCompiler {
     }
 
     protected static void _PRINT() { //should only be used for debugging. does not actually compile anything
-        String sToken = "";
+
         StringBuilder out = new StringBuilder();
+
         while (tokenPointer < compilerTokens.size() - 1) {
+
             tokenPointer++;
             currentToken = compilerTokens.get(tokenPointer);
             sToken = new String(currentToken);
+            String sToken = new String(currentToken);
+
             if (Arrays.equals(currentToken, ";".toCharArray())) break;
+
             out.append(sToken);
             out.append(" ");
+
         }
+
         System.out.println(out);
     }
 
