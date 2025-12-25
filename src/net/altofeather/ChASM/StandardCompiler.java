@@ -49,9 +49,6 @@ public class StandardCompiler extends ExtendableCompiler {
 
         currentStackObject.pushStack(() -> {
 
-            System.out.println(STR."expectations for : \{new String(currentStackObject.token)}");
-            System.out.println(currentStackObject.expectations);
-
             for (int expectationIndex = 0; expectationIndex < currentStackObject.expectations.size(); expectationIndex++) {
 
                 int fakeProgramPointer = programPointer + expectationIndex + 1;
