@@ -14,27 +14,7 @@ public class StackObject {
 
     public boolean complete = false;
 
-    public boolean abs = false; //is abstract
-    public boolean grouped = false; //is grouped
-    public ArrayList<StackObject> enforcements = new ArrayList<>();
-
-    static class GatheredToken {
-
-        boolean self = false;
-
-        String tokenName;
-        char[] gatheredToken;
-
-        GatheredToken(String tokenName, char[] gatheredToken) {
-
-            this.tokenName = tokenName;
-            this.gatheredToken = gatheredToken;
-
-        }
-
-    }
-
-    public ArrayList<GatheredToken> gatheredTokens = new ArrayList<>();
+    CB function;
 
     public interface CB {
         boolean cb(StackObject self) throws Exception;
