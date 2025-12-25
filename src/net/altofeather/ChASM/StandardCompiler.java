@@ -61,6 +61,8 @@ public class StandardCompiler extends ExtendableCompiler {
 
                 char[] programToken = tokenizedProgram[fakeProgramPointer].toCharArray();
 
+                System.out.println(STR."checking for \{new String(programToken)}");
+
                 switch (expectation.type) {
 
                     case EXTENSIONAL -> {
