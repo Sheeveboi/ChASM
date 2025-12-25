@@ -17,7 +17,7 @@ public class Main {
         File program = new File(STR."test.\{ExtendableCompiler.programExtension}");
         Scanner programReader = new Scanner(program);
         StringBuilder programData = new StringBuilder();
-        while (programReader.hasNextLine()) programData.append(programReader.nextLine());
+        while (programReader.hasNextLine()) programData.append(STR."\{programReader.nextLine()} ");
         programReader.close();
 
         System.out.println("compiler result: ");
