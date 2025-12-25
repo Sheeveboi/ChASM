@@ -9,74 +9,40 @@ public class StandardCompiler extends ExtendableCompiler {
         super(program);
     }
 
-    public interface Callback {
+    public interface StackEdition {
         void cb() throws Exception;
     }
     
-    protected static void _ENFORCE() throws Exception {
+    protected static void _EXPECT() throws Exception {
+        
+        ArrayList<char[]> expectationTokens = new ArrayList<>();
 
-        //instantiate variables
-        ArrayList<char[]> enforcementImplementation = new ArrayList<>();
-
-        //create new extention stack object
-        StackObject enforcingStackObject = new StackObject((self) -> {
-
-            for (
-
-                int localIndex = 0;
-
-                programPointer < self.enforcements.size() &&
-                programPointer < tokenizedProgram.length &&
-                localIndex < self.enforcements.size();
-
-                localIndex++
-
-            ) {
-
-                programPointer++;
-
-                char[] programToken = tokenizedProgram[programPointer].toCharArray();
-
-                StackObject enforcement = self.enforcements.get(localIndex);
-
-                if (Arrays.equals(enforcement.token, programToken)) while (!enforcement.runOperation());
-                else throw new Exception("Syntax Error!");
-
-            }
-
-            return true;
-
-        }, extendingToken.clone(), "ENFORCE");
-
-        //get all enforcement tokens in the chasm implementation
         for (tokenPointer++; tokenPointer < compilerTokens.size(); tokenPointer++) {
 
             char[] token = compilerTokens.get(tokenPointer);
 
             if (Arrays.equals(token, ";".toCharArray())) break;
 
-            enforcementImplementation.add(token);
+            expectationTokens.add(token);
 
         }
 
-        //add extensions to the enforcementImplementation
-        for (char[] implementationToken : enforcementImplementation) {
+        for (char[] token : expectationTokens) {
 
-            for (char[] extensional : extensions.keySet()) {
+            for (char[] key : expectationMap.keySet()) {
 
-                System.out.println(STR."Extentional: \{new String(extensional)}, Implementation: \{new String(implementationToken)}");
+                if (Arrays.equals(key, token)) {
 
-                if (Arrays.equals(implementationToken, extensional)) {
-                    enforcingStackObject.enforcements.add(extensions.get(extensional));
+                    expectationMap.get(key).cb();
+
                     break;
+
                 }
 
             }
 
         }
-
-        //push an enforcement StackObject
-        getCurrentStackObject().pushStack(enforcingStackObject);
+        
     }
 
     protected static void _EXTEND() throws Exception {
