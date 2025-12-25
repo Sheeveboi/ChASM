@@ -113,7 +113,7 @@ public class StandardCompiler extends ExtendableCompiler {
 
         if (abstractExtensions.containsKey(currentToken)) throw new Exception(STR."Abstract Extensional with name '\{new String(currentToken)}' already exists.");
 
-        abstractExtensions.put(currentToken, new StackObject(() -> false, extendingToken.clone(), "ABSTRACT EXTEND"));
+        abstractExtensions.put(currentToken, new StackObject(() -> true, extendingToken.clone(), "ABSTRACT EXTEND"));
 
     }
 
