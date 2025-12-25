@@ -97,7 +97,7 @@ public class ExtendableCompiler {
         StandardCompiler.registerImplementation("INSERT HEX ", StandardCompiler::_INSERT_HEX);
         StandardCompiler.registerImplementation("PRINT ", StandardCompiler::_PRINT);
 
-        StandardCompiler.registerImplementation("PROGRAM EXTENSION NAME: ", StandardCompiler::PROGRAM_EXTENSION_NAME);
+        StandardCompiler.registerImplementation("PROGRAM EXTENSION NAME: ", StandardCompiler::_PROGRAM_EXTENSION_NAME);
 
         ArrayList<char[]> realTokens = new ArrayList<>(operationMap.keySet());
 

@@ -152,7 +152,7 @@ public class StandardCompiler extends ExtendableCompiler {
 
     protected static void _INSERT_FLOAT() {
 
-        System.out.println(extendingToken + " will insert a float");
+        System.out.println(STR."\{new String(extendingToken)} will insert a float");
 
         tokenPointer++;
         currentToken = compilerTokens.get(tokenPointer);
@@ -182,7 +182,7 @@ public class StandardCompiler extends ExtendableCompiler {
 
     protected static void _INSERT_INTEGER() {
 
-        System.out.println(extendingToken + " will insert an integer");
+        System.out.println(STR."\{new String(extendingToken)} will insert an integer");
 
         tokenPointer++;
         currentToken = compilerTokens.get(tokenPointer);
@@ -247,11 +247,16 @@ public class StandardCompiler extends ExtendableCompiler {
         System.out.println(out);
     }
 
-    protected static void registerImplementation(String token, StackEdition edition) {
-        operationMap.put(token.toCharArray(), edition);
+    protected static void _PROGRAM_EXTENSION_NAME() {
+
+        tokenPointer++;
+        currentToken = compilerTokens.get(tokenPointer);
+
+        programExtension = new String(currentToken);
+
     }
 
-    protected static void registerImplementation(String token, Callback callback) {
-        operationMap.put(token.toCharArray(), callback);
+    protected static void registerImplementation(String token, StackEdition edition) {
+        operationMap.put(token.toCharArray(), edition);
     }
 }
