@@ -27,21 +27,62 @@ public class StandardCompiler extends ExtendableCompiler {
 
         }
 
-        for (char[] token : expectationTokens) {
+        StackObject currentStackObject = getCurrentStackObject();
 
-            for (char[] key : expectationMap.keySet()) {
+        for (char[] expectation : expectationTokens) {
 
-                if (Arrays.equals(key, token)) {
+            if (getExtension(expectation) != null)
+                currentStackObject.expectations.add(
+                    new Expectation(Expectation.ExpectationType.EXTENSIONAL, expectation));
 
-                    expectationMap.get(key).cb();
+            else if (getAbstractExtension(expectation) != null)
+                currentStackObject.expectations.add(
+                    new Expectation(Expectation.ExpectationType.ABSTRACT_EXTENSIONAL, expectation));
 
-                    break;
+            else if (getExtensionalGroup(expectation) != null)
+                currentStackObject.expectations.add(
+                    new Expectation(Expectation.ExpectationType.EXTENSIONAL_GROUP, expectation));
+
+            else throw new Exception("Expectation not the name of any Extensional, Abstract Extensional, or Group");
+
+        }
+
+        currentStackObject.pushStack(() -> {
+
+            System.out.println(STR."expectations for : \{new String(currentStackObject.token)}");
+            System.out.println(currentStackObject.expectations);
+
+            for (int expectationIndex = 0; expectationIndex < currentStackObject.expectations.size(); expectationIndex++) {
+
+                int fakeProgramPointer = programPointer + expectationIndex + 1;
+                Expectation expectation = currentStackObject.expectations.get(expectationIndex);
+
+                if (fakeProgramPointer >= tokenizedProgram.length) throw new Exception("Syntax Error: Unexpected end of program");
+
+                char[] programToken = tokenizedProgram[fakeProgramPointer].toCharArray();
+
+                switch (expectation.type) {
+
+                    case EXTENSIONAL -> {
+                        if (!Arrays.equals(programToken, expectation.name)) throw new Exception(STR."Syntax Error: Unexpected token '\{new String(programToken)}'");
+                    }
+
+                    case ABSTRACT_EXTENSIONAL -> {
+
+                    }
+
+                    case EXTENSIONAL_GROUP -> {
+
+                    }
 
                 }
 
+                System.out.println(expectationIndex);
+
             }
 
-        }
+            return true;
+        }, extendingToken, "EXPECT");
         
     }
 
