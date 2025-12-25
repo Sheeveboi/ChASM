@@ -113,14 +113,21 @@ public class ExtendableCompiler {
 
     public ArrayList<Byte> runCompiler(String program) throws Exception {
 
-        tokenizedProgram = program.split(" ");
+        tokenizedProgram = program.split("\s+");
 
-        for (programPointer = 0; programPointer < tokenizedProgram.length; programPointer++) {
+        ArrayList<char[]> convertedProgram = new ArrayList<>();
 
-            String token = tokenizedProgram[programPointer];
+        System.out.println(Arrays.toString(tokenizedProgram));
+        for (String token : tokenizedProgram) if (!Objects.equals(token, " ")) convertedProgram.add(token.toCharArray());
+
+        for (programPointer = 0; programPointer < convertedProgram.size(); programPointer++) {
+
+            char[] token = convertedProgram.get(programPointer);
+
             for (char[] key : extensions.keySet()) {
 
-                if (Arrays.equals(key, token.toCharArray())){
+                if (Arrays.equals(key, token)){
+                    System.out.println(STR."running extension: \{new String(token)}");
                     StackObject copiedStackProgram = extensions.get(key);
                     while (!copiedStackProgram.runOperation());
                     break;
