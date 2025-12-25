@@ -24,6 +24,7 @@ public class ExtendableCompiler {
     protected static int programPointer;
     protected static char[] extendingToken;
     protected static boolean abstractExtension = false;
+    protected static String programExtension;
 
     public static StackObject getExtension(char[] name) {
         for (char[] key : extensions.keySet()) if (Arrays.equals(key, name)) return extensions.get(key);
