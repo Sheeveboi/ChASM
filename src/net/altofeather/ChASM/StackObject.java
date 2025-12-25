@@ -17,10 +17,10 @@ public class StackObject {
     CB function;
 
     public interface CB {
-        boolean cb(StackObject self) throws Exception;
+        boolean cb() throws Exception;
     }
 
-    CB function;
+    public ArrayList<Expectation> expectations = new ArrayList<>();
 
     public StackObject(CB operation, char[] token, String operationName) {
         this.token = token;
@@ -66,8 +66,7 @@ public class StackObject {
     public boolean runOperation() throws Exception {
 
         if (!this.complete) {
-            System.out.println(STR."Enforcements: \{this.enforcements}, Token: \{new String(this.token)}, Operation: \{this.operationName}");
-            this.complete = this.function.cb(this);
+            this.complete = this.function.cb();
             return false;
         }
 

@@ -89,7 +89,6 @@ public class StandardCompiler extends ExtendableCompiler {
     protected static void _EXTEND() throws Exception {
 
         tokenPointer++;
-
         currentToken = compilerTokens.get(tokenPointer);
 
         extendingToken = currentToken;
@@ -99,7 +98,7 @@ public class StandardCompiler extends ExtendableCompiler {
 
         if (abstractExtensions.containsKey(currentToken)) throw new Exception(STR."Abstract Extensional with name '\{new String(currentToken)}' already exists.");
 
-        extensions.put(currentToken, new StackObject((_) -> true, extendingToken.clone(), "EXTEND"));
+        extensions.put(currentToken, new StackObject(() -> true, extendingToken.clone(), "EXTEND"));
 
     }
 
@@ -115,7 +114,7 @@ public class StandardCompiler extends ExtendableCompiler {
 
         if (abstractExtensions.containsKey(currentToken)) throw new Exception(STR."Abstract Extensional with name '\{new String(currentToken)}' already exists.");
 
-        abstractExtensions.put(currentToken, new StackObject((_) -> true, extendingToken.clone(), "ABSTRACT EXTEND"));
+        abstractExtensions.put(currentToken, new StackObject(() -> false, extendingToken.clone(), "ABSTRACT EXTEND"));
 
     }
 
@@ -162,7 +161,7 @@ public class StandardCompiler extends ExtendableCompiler {
 
         String value = new String(currentToken);
 
-        currentStackObject.pushStack((_) -> {
+        currentStackObject.pushStack(() -> {
 
             ArrayList<Byte> out = new ArrayList<>();
 
@@ -192,7 +191,7 @@ public class StandardCompiler extends ExtendableCompiler {
 
         String value = new String(currentToken);
 
-        currentStackObject.pushStack((_) -> {
+        currentStackObject.pushStack(() -> {
             compiledBytecode.add((byte) Integer.parseInt(value));
             return true;
         }, extendingToken, "INSERT_NUMBER");
@@ -208,7 +207,7 @@ public class StandardCompiler extends ExtendableCompiler {
 
         String value = new String(currentToken);
 
-        stackObject.pushStack((_) -> {
+        stackObject.pushStack(() -> {
             compiledBytecode.add((byte) Integer.parseInt(value, 16));
             return true;
         }, extendingToken, "INSERT_HEX");
@@ -226,7 +225,7 @@ public class StandardCompiler extends ExtendableCompiler {
 
         String value = new String(currentToken);
 
-        stackObject.pushStack((_) -> {
+        stackObject.pushStack(() -> {
             for (char c : value.toCharArray()) compiledBytecode.add((byte) c);
             return true;
         }, extendingToken, "INSERT_UTF_8");
@@ -235,32 +234,21 @@ public class StandardCompiler extends ExtendableCompiler {
     }
 
     protected static void _PRINT() { //should only be used for debugging. does not actually compile anything
-
+        String sToken = "";
         StringBuilder out = new StringBuilder();
-
         while (tokenPointer < compilerTokens.size() - 1) {
-
             tokenPointer++;
             currentToken = compilerTokens.get(tokenPointer);
-            String sToken = new String(currentToken);
-
+            sToken = new String(currentToken);
             if (Arrays.equals(currentToken, ";".toCharArray())) break;
-
             out.append(sToken);
             out.append(" ");
-
         }
-
         System.out.println(out);
     }
 
-    protected static void PROGRAM_EXTENSION_NAME() {
-
-        tokenPointer ++;
-        currentToken = compilerTokens.get(tokenPointer);
-
-        ExtendableCompiler.programExtensionName = new String(currentToken);
-
+    protected static void registerImplementation(String token, StackEdition edition) {
+        operationMap.put(token.toCharArray(), edition);
     }
 
     protected static void registerImplementation(String token, Callback callback) {

@@ -117,7 +117,6 @@ public class ExtendableCompiler {
         for (programPointer = 0; programPointer < tokenizedProgram.length; programPointer++) {
 
             String token = tokenizedProgram[programPointer];
-
             for (char[] key : extensions.keySet()) {
 
                 if (Arrays.equals(key, token.toCharArray())){
