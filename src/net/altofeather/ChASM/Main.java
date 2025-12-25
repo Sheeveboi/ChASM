@@ -14,12 +14,13 @@ public class Main {
 
         ExtendableCompiler e = new ExtendableCompiler(extentionData.toString().toCharArray());
 
-        File program = new File(STR."test.\{ExtendableCompiler.programExtensionName}");
+        File program = new File(STR."test.\{ExtendableCompiler.programExtension}");
         Scanner programReader = new Scanner(program);
         StringBuilder programData = new StringBuilder();
         while (programReader.hasNextLine()) programData.append(programReader.nextLine());
         programReader.close();
 
+        System.out.println("compiler result: ");
         System.out.println(e.runCompiler(programData.toString()).toString());
     }
 }
