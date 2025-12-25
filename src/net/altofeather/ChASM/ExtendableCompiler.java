@@ -25,6 +25,21 @@ public class ExtendableCompiler {
     protected static char[] extendingToken;
     protected static boolean abstractExtension = false;
 
+    public static StackObject getExtension(char[] name) {
+        for (char[] key : extensions.keySet()) if (Arrays.equals(key, name)) return extensions.get(key);
+        return null;
+    }
+
+    public static StackObject getAbstractExtension(char[] name) {
+        for (char[] key : abstractExtensions.keySet()) if (Arrays.equals(key, name)) return abstractExtensions.get(key);
+        return null;
+    }
+
+    public static ArrayList<char[]> getExtensionalGroup(char[] name) {
+        for (char[] key : abstractGroups.keySet()) if (Arrays.equals(key, name)) return abstractGroups.get(key);
+        return null;
+    }
+
     public ArrayList<char[]> gatherIdentifiers(ArrayList<char[]> identifiers, char[] program) {
         ArrayList<char[]> newTokens = new ArrayList<>();
         char[] newToken = new char[]{};
