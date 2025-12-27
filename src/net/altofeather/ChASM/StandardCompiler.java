@@ -131,7 +131,12 @@ public class StandardCompiler extends ExtendableCompiler {
 
         if (abstractStackObject == null) throw new Exception("Could not find abstract extensional.");
 
+        for (char[] implication : currentStackObject.implications)
+            if (Arrays.equals(implication, currentToken))
+                throw new Exception("Abstract extension may only be implied once per extension");
+
         currentStackObject.pushStack(abstractStackObject);
+        currentStackObject.implications.add(currentToken);
 
     }
 

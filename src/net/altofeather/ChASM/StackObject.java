@@ -11,6 +11,8 @@ public class StackObject {
 
     public char[] token;
     public String operationName;
+    public int stackSize = 1;
+    public ArrayList<char[]> implications = new ArrayList<>();
 
     public boolean complete = false;
 
