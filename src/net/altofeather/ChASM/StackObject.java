@@ -72,7 +72,6 @@ public class StackObject {
             System.out.println(STR."ended pushing stack at \{new String(this.token)}");
 
             this.child = stackObject;
-            this.child.parent = this;
         }
     }
 

@@ -198,7 +198,9 @@ public class StandardCompiler extends ExtendableCompiler {
         currentStackObject.pushStack(() -> {
             compiledBytecode.add((byte) Integer.parseInt(value));
             return true;
-        }, extendingToken, "INSERT_NUMBER");
+        }, extendingToken, "INSERT_INTEGER");
+
+        //System.out.println(STR."stack size of current: \{currentStackObject.getStackSize()}");
 
     }
 
