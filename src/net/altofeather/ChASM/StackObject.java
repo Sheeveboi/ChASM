@@ -87,17 +87,16 @@ public class StackObject {
 
     public boolean runOperation() throws Exception {
 
-        if (!this.complete) {
-            this.complete = this.function.cb();
-            return false;
-        }
+        if (!this.complete) this.complete = this.function.cb();
 
         if (this.child == null) {
             unfreeze();
             return true;
         }
 
-        return this.child.runOperation();
+        if (this.complete) return this.child.runOperation();
+
+        return false;
 
     }
 
