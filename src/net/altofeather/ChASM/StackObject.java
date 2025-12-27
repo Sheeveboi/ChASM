@@ -35,17 +35,37 @@ public class StackObject {
         if (this.parent != null) this.parent.unfreeze();
     }
 
+    public void printStack() {
+        if (this.child != null) this.child.printStack();
+        System.out.println(this.operationName);
+    }
+
     public void pushStack(CB operation, char[] token, String operationName) {
+
+        System.out.println(STR."pushing stack on \{this.operationName}");
+
+        this.stackSize++;
 
         if (this.child != null) this.child.pushStack(operation, token, operationName);
 
         else {
-            this.child = new StackObject(operation, token, operationName);
-            this.child.parent = this;
+
+            System.out.println(STR."ended pushing stack at \{new String(this.token)}");
+
+            StackObject newStackObject = new StackObject(operation, token, operationName);
+
+            this.child = newStackObject;
+
         }
     }
 
     public void pushStack(StackObject stackObject) {
+
+        System.out.println(STR."pushing stack on \{this.operationName}");
+
+        this.stackSize++;
+
+        stackObject.token = this.token;
 
         if (this.child != null) this.child.pushStack(stackObject);
 
