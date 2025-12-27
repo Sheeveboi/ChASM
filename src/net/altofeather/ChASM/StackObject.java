@@ -68,6 +68,9 @@ public class StackObject {
         if (this.child != null) this.child.pushStack(stackObject);
 
         else {
+
+            System.out.println(STR."ended pushing stack at \{new String(this.token)}");
+
             this.child = stackObject;
             this.child.parent = this;
         }
