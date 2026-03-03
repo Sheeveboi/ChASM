@@ -94,6 +94,7 @@ public class ExtendableCompiler {
         StandardCompiler.registerImplementation("INSERT FLOAT ", StandardCompiler::_INSERT_FLOAT);
         StandardCompiler.registerImplementation("INSERT INTEGER ", StandardCompiler::_INSERT_INTEGER);
         StandardCompiler.registerImplementation("INSERT HEX ", StandardCompiler::_INSERT_HEX);
+        StandardCompiler.registerImplementation("INSERT UTF_8 ", StandardCompiler::_INSERT_UTF_8);
         StandardCompiler.registerImplementation("PRINT ", StandardCompiler::_PRINT);
 
         StandardCompiler.registerImplementation("PROGRAM EXTENSION NAME: ", StandardCompiler::_PROGRAM_EXTENSION_NAME);
