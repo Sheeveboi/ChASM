@@ -17,9 +17,9 @@ public abstract class Expectation {
 
     public static Expectation generateExpectation(char[] token, boolean gathered) {
 
-        if      (getExtension(token)         != null ) return new Extensional(token, gathered);
-        else if (getAbstractExtension(token) != null ) return new AbstractExtensional(token,  gathered);
-        else if (getExtensionalGroup(token)  != null ) return new Grouping(token, gathered);
+        if      (getExtension(token)         != null) return new Extensional         (token, gathered);
+        else if (getAbstractExtension(token) != null) return new AbstractExtensional (token, gathered);
+        else if (getExtensionalGroup(token)  != null) return new Grouping            (token, gathered);
 
         return null;
 
