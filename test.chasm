@@ -1,19 +1,14 @@
 PROGRAM EXTENSION NAME: soprano;
 
-ABSTRACT EXTEND testAbstract1;
-INSERT INTEGER 25;
+ABSTRACT EXTEND integer;
+NEGATIVE SYNTAX \D;
+POSITIVE SYNTAX \d;
+INSERT INTEGER SELF;
 
-EXTEND test3;
-INSERT INTEGER 3;
+ABSTRACT EXTEND string;
+POSITIVE SYNTAX "\w*"; //TODO: while this is great for cheating string syntax, implementing a CAPTURE keyword in expectations that captures a string between two tokens is more effective. This cannot handle spaces in strings
+EXTRACT ";
+INSERT UTF_8 SELF;
 
-EXTEND test4;
-INSERT INTEGER 4;
-EXPECT test3;
-
-EXTEND test2;
-INSERT INTEGER 2;
-IMPLY testAbstract1;
-
-EXTEND test1;
-INSERT INTEGER 1;
-EXPECT test4;
+EXTEND add;
+EXPECT string integer;
