@@ -4,6 +4,7 @@ import net.altofeather.ChASM.ExpectationObjects.Expectation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 public class StandardCompiler extends ExtendableCompiler {
 
@@ -13,6 +14,15 @@ public class StandardCompiler extends ExtendableCompiler {
 
     public interface StackEdition {
         void cb() throws Exception;
+    }
+
+    protected static void _SYNTAX() {
+
+        tokenPointer++;
+        currentToken = compilerTokens.get(tokenPointer);
+
+        getCurrentStackObject().syntax = Pattern.compile(new String(currentToken));
+
     }
     
     protected static void _EXPECT() throws Exception {
@@ -57,8 +67,6 @@ public class StandardCompiler extends ExtendableCompiler {
                 System.out.println(STR."checking \{new String(programToken)} (expecting \{new String(expectation.name)})");
 
                 if (!expectation.check(programToken)) throw new Exception("Syntax Error: Unexpected Token");
-
-                System.out.println(expectationIndex);
 
             }
 
@@ -223,15 +231,12 @@ public class StandardCompiler extends ExtendableCompiler {
 
         final String[] value = {new String(currentToken)};
 
-        System.out.println(value[0]);
-
         boolean self = value[0].equals("SELF");
         if (!abstractExtension && self) throw new Exception(STR."SELF may not be referenced in non-abstract extensional.");
 
         stackObject.pushStack(() -> {
             if (self) value[0] = tokenizedProgram[programPointer];
             for (char c : value[0].toCharArray()) compiledBytecode.add((byte) c);
-            System.out.println(compiledBytecode);
             return true;
         }, extendingToken, "INSERT_UTF_8");
 

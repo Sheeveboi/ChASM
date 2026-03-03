@@ -3,6 +3,7 @@ package net.altofeather.ChASM;
 import net.altofeather.ChASM.ExpectationObjects.Expectation;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class StackObject {
 
@@ -13,6 +14,7 @@ public class StackObject {
     public String operationName;
     public int stackSize = 1;
     public ArrayList<char[]> implications = new ArrayList<>();
+    public Pattern syntax;
 
     public boolean complete = false;
 
