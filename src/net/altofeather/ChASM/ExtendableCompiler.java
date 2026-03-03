@@ -4,25 +4,25 @@ import java.util.*;
 
 public class ExtendableCompiler {
 
-    protected static ArrayList<char[]> compilerTokens = new ArrayList<>();
+    public static ArrayList<char[]> compilerTokens = new ArrayList<>();
 
-    protected static Map<char[], StackObject> extensions = new HashMap<>(); //for front end extensionals
-    protected static Map<char[], StackObject> abstractExtensions = new HashMap<>(); //for back end extensionals
-    protected static Map<char[], ArrayList<char[]>> abstractGroups = new HashMap<>(); //groups back end extensionals to multiple front end extensionals
+    public static Map<char[], StackObject> extensions = new HashMap<>(); //for front end extensionals
+    public static Map<char[], StackObject> abstractExtensions = new HashMap<>(); //for back end extensionals
+    public static Map<char[], ArrayList<char[]>> abstractGroups = new HashMap<>(); //groups back end extensionals to multiple front end extensionals
 
-    protected static Map<char[], StandardCompiler.StackEdition> operationMap = new HashMap<>(); //maps front end extensionals to back end operations
+    public static Map<char[], StandardCompiler.StackEdition> operationMap = new HashMap<>(); //maps front end extensionals to back end operations
 
-    protected static ArrayList<Byte> compiledBytecode = new ArrayList<>(); //stores final result
+    public static ArrayList<Byte> compiledBytecode = new ArrayList<>(); //stores final result
 
-    protected static ArrayList<char[]> tokenizedProgram; //stores tokenized compile target
+    public static ArrayList<char[]> tokenizedProgram; //stores tokenized compile target
 
     //control variables
-    protected static char[] currentToken;
-    protected static int tokenPointer;
-    protected static int programPointer;
-    protected static char[] extendingToken;
-    protected static boolean abstractExtension = false;
-    protected static String programExtension;
+    public static char[] currentToken;
+    public static int tokenPointer;
+    public static int programPointer;
+    public static char[] extendingToken;
+    public static boolean abstractExtension = false;
+    public static String programExtension;
 
     public static StackObject getExtension(char[] name) {
         for (char[] key : extensions.keySet()) if (Arrays.equals(key, name)) return extensions.get(key);
@@ -38,7 +38,6 @@ public class ExtendableCompiler {
         for (char[] key : abstractGroups.keySet()) if (Arrays.equals(key, name)) return abstractGroups.get(key);
         return null;
     }
-
 
     public ArrayList<char[]> tokenize(ArrayList<char[]> identifiers, char[] program) {
 
@@ -133,8 +132,6 @@ public class ExtendableCompiler {
 
         compilerTokens = tokenize(realTokens, program);
 
-        for (char[] token : compilerTokens) System.out.println(new String(token));
-
         for (tokenPointer = 0; tokenPointer < compilerTokens.size() - 1; tokenPointer++) {
             char[] token = compilerTokens.get(tokenPointer);
             if (operationMap.containsKey(token)) operationMap.get(token).cb();
@@ -146,8 +143,11 @@ public class ExtendableCompiler {
 
         ArrayList<char[]> identifiers = new ArrayList<>();
         identifiers.add(new char[]{' '});
+        identifiers.addAll(extensions.keySet());
 
         tokenizedProgram = tokenize(identifiers, program.toCharArray());
+
+        for (char[] token : tokenizedProgram) System.out.println(new String(token));
 
         for (programPointer = 0; programPointer < tokenizedProgram.size(); programPointer++) {
 

@@ -2,6 +2,7 @@ package net.altofeather.ChASM.ExpectationObjects;
 
 import net.altofeather.ChASM.ExtendableCompiler;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 public class AbstractExtensional extends Expectation {
@@ -38,6 +39,11 @@ public class AbstractExtensional extends Expectation {
         if (out && !gathered) this.extensional.runOperation();
         return out;
 
+    }
+
+    @Override
+    public int assignParameters(ArrayList<char[]> fullContext, int location) {
+        return 0;
     }
 
 }

@@ -3,6 +3,8 @@ package net.altofeather.ChASM;
 import net.altofeather.ChASM.ExpectationObjects.Expectation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class StackObject {
@@ -13,10 +15,12 @@ public class StackObject {
     public char[] token;
     public String operationName;
     public int stackSize = 1;
-    public ArrayList<char[]> implications = new ArrayList<>();
     public Pattern positiveSyntax;
     public Pattern negativeSyntax;
     public String selfValue;
+
+    public ArrayList<char[]> implications = new ArrayList<>();
+    public Map<char[], ArrayList<char[]>> capturedBodies = new HashMap<>();
 
     public boolean complete = false;
 

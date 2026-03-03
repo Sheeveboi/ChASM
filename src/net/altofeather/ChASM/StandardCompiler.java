@@ -77,11 +77,16 @@ public class StandardCompiler extends ExtendableCompiler {
         StackObject currentStackObject = getCurrentStackObject();
 
         //parse and build expectations
-        for (char[] expectation : expectationTokens) {
+        for (int expectationIndex = 0; expectationIndex < expectationTokens.size(); expectationIndex++) {
+
+            char[] expectation = expectationTokens.get(expectationIndex);
 
             Expectation fullExpectation = Expectation.generateExpectation(expectation, false);
 
-            if (fullExpectation == null) throw new Exception("Expectation not the name of any Extensional, Abstract Extensional, or Group");
+            if (fullExpectation == null) throw new Exception("Unexpected expectation token");
+
+            if (fullExpectation.action) expectationIndex += fullExpectation.assignParameters(expectationTokens, expectationIndex);
+
 
             currentStackObject.expectations.add(fullExpectation);
 
@@ -94,9 +99,9 @@ public class StandardCompiler extends ExtendableCompiler {
                 programPointer++;
                 Expectation expectation = currentStackObject.expectations.get(expectationIndex);
 
-                if (programPointer >= tokenizedProgram.length) throw new Exception("Syntax Error: Unexpected end of program");
+                if (programPointer >= tokenizedProgram.size()) throw new Exception("Syntax Error: Unexpected end of program");
 
-                char[] programToken = tokenizedProgram[programPointer].toCharArray();
+                char[] programToken = tokenizedProgram.get(programPointer);
 
                 System.out.println(STR."checking \{new String(programToken)} (expecting \{new String(expectation.name)})");
 
