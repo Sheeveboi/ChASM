@@ -91,7 +91,7 @@ public class StandardCompiler extends ExtendableCompiler {
 
             for (int expectationIndex = 0; expectationIndex < currentStackObject.expectations.size(); expectationIndex++) {
 
-                programPointer = programPointer + expectationIndex + 1;
+                programPointer++;
                 Expectation expectation = currentStackObject.expectations.get(expectationIndex);
 
                 if (programPointer >= tokenizedProgram.length) throw new Exception("Syntax Error: Unexpected end of program");
