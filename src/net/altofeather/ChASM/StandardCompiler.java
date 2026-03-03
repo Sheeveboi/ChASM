@@ -70,7 +70,7 @@ public class StandardCompiler extends ExtendableCompiler {
 
             if (Arrays.equals(token, ";".toCharArray())) break;
 
-            expectationTokens.add(token);
+            if (!new String(token).replace(" ", "").isEmpty()) expectationTokens.add(token);
 
         }
 
