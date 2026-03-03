@@ -86,7 +86,6 @@ public class ExtendableCompiler {
         StandardCompiler.registerImplementation(" ", () -> {});
 
         StandardCompiler.registerImplementation("EXPECT ", StandardCompiler::_EXPECT);
-
         StandardCompiler.registerImplementation("ABSTRACT EXTEND ", StandardCompiler::_ABSTRACT_EXTEND);
         StandardCompiler.registerImplementation("EXTEND ", StandardCompiler::_EXTEND);
         StandardCompiler.registerImplementation("IMPLY ", StandardCompiler::_IMPLY);
@@ -96,8 +95,9 @@ public class ExtendableCompiler {
         StandardCompiler.registerImplementation("INSERT HEX ", StandardCompiler::_INSERT_HEX);
         StandardCompiler.registerImplementation("INSERT UTF_8 ", StandardCompiler::_INSERT_UTF_8);
         StandardCompiler.registerImplementation("PRINT ", StandardCompiler::_PRINT);
-
         StandardCompiler.registerImplementation("PROGRAM EXTENSION NAME: ", StandardCompiler::_PROGRAM_EXTENSION_NAME);
+        StandardCompiler.registerImplementation("POSITIVE SYNTAX ", StandardCompiler::_POSITIVE_SYNTAX);
+        StandardCompiler.registerImplementation("NEGATIVE SYNTAX ", StandardCompiler::_NEGATIVE_SYNTAX);
 
         ArrayList<char[]> realTokens = new ArrayList<>(operationMap.keySet());
 

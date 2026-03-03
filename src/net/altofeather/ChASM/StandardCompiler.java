@@ -16,12 +16,25 @@ public class StandardCompiler extends ExtendableCompiler {
         void cb() throws Exception;
     }
 
-    protected static void _SYNTAX() {
+    protected static void _POSITIVE_SYNTAX() throws Exception {
+
+        if (!abstractExtension) throw new Exception("Cannot apply syntax to non-abstract extensional.");
 
         tokenPointer++;
         currentToken = compilerTokens.get(tokenPointer);
 
-        getCurrentStackObject().syntax = Pattern.compile(new String(currentToken));
+        getCurrentStackObject().positiveSyntax = Pattern.compile(new String(currentToken));
+
+    }
+
+    protected static void _NEGATIVE_SYNTAX() throws Exception {
+
+        if (!abstractExtension) throw new Exception("Cannot apply syntax to non-abstract extensional.");
+
+        tokenPointer++;
+        currentToken = compilerTokens.get(tokenPointer);
+
+        getCurrentStackObject().negativeSyntax = Pattern.compile(new String(currentToken));
 
     }
     

@@ -1,6 +1,6 @@
 package net.altofeather.ChASM.ExpectationObjects;
 
-import net.altofeather.ChASM.StackObject;
+import net.altofeather.ChASM.ExtendableCompiler;
 
 import java.util.regex.Matcher;
 
@@ -16,10 +16,21 @@ public class AbstractExtensional extends Expectation {
 
         boolean out = false;
 
-        if (this.extensional.syntax == null) out = true;
+        if (this.extensional.positiveSyntax == null && this.extensional.negativeSyntax == null) out = true;
         else {
-            Matcher matcher = this.extensional.syntax.matcher(new String(programToken));
-            out = matcher.find();
+
+            if (this.extensional.positiveSyntax != null) {
+                Matcher matcher = this.extensional.positiveSyntax.matcher(new String(programToken));
+                out = matcher.find();
+            }
+
+            if (this.extensional.negativeSyntax != null) {
+                Matcher matcher = this.extensional.negativeSyntax.matcher(new String(programToken));
+                out = !matcher.find();
+            }
+
+            if (!out) throw new Exception("Syntax error.");
+
         }
 
         if (out && !gathered) this.extensional.runOperation();

@@ -14,7 +14,9 @@ public class StackObject {
     public String operationName;
     public int stackSize = 1;
     public ArrayList<char[]> implications = new ArrayList<>();
-    public Pattern syntax;
+    public Pattern positiveSyntax;
+    public Pattern negativeSyntax;
+    public String selfValue;
 
     public boolean complete = false;
 
