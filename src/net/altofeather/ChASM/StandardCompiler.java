@@ -16,6 +16,27 @@ public class StandardCompiler extends ExtendableCompiler {
         void cb() throws Exception;
     }
 
+    protected static void _EXTRACT() throws Exception {
+
+        if (!abstractExtension) throw new Exception("Cannot extract substring from non-abstract extensional.");
+
+        tokenPointer++;
+        currentToken = compilerTokens.get(tokenPointer);
+
+        StackObject currentStackObject = getCurrentStackObject();
+        String pattern = new String(currentToken);
+
+        currentStackObject.pushStack(() -> {
+
+            System.out.println(currentStackObject.selfValue);
+
+            currentStackObject.selfValue = currentStackObject.selfValue.replaceAll(pattern, "");
+
+            return true;
+
+        }, extendingToken, "EXTRACT");
+    }
+
     protected static void _POSITIVE_SYNTAX() throws Exception {
 
         if (!abstractExtension) throw new Exception("Cannot apply syntax to non-abstract extensional.");
@@ -176,7 +197,7 @@ public class StandardCompiler extends ExtendableCompiler {
             ArrayList<Byte> out = new ArrayList<>();
 
             //encode value
-            if (self) value[0] = tokenizedProgram[programPointer];
+            if (self) value[0] = currentStackObject.selfValue;
             int intBits = Float.floatToIntBits(Float.parseFloat(value[0]));
 
             out.add((byte) (intBits >> 24));
@@ -206,7 +227,7 @@ public class StandardCompiler extends ExtendableCompiler {
         if (!abstractExtension && self) throw new Exception(STR."SELF may not be referenced in non-abstract extensional.");
 
         currentStackObject.pushStack(() -> {
-            if (self) value[0] = tokenizedProgram[programPointer];
+            if (self) value[0] = currentStackObject.selfValue;
             compiledBytecode.add((byte) Integer.parseInt(value[0]));
             return true;
         }, extendingToken, "INSERT_INTEGER");
@@ -218,15 +239,15 @@ public class StandardCompiler extends ExtendableCompiler {
         tokenPointer++;
         currentToken = compilerTokens.get(tokenPointer);
 
-        StackObject stackObject = getCurrentStackObject();
+        StackObject currentStackObject = getCurrentStackObject();
 
         final String[] value = {new String(currentToken)};
 
         boolean self = value[0].equals("SELF");
         if (!abstractExtension && self) throw new Exception(STR."SELF may not be referenced in non-abstract extensional.");
 
-        stackObject.pushStack(() -> {
-            if (self) value[0] = tokenizedProgram[programPointer];
+        currentStackObject.pushStack(() -> {
+            if (self) value[0] = currentStackObject.selfValue;
             compiledBytecode.add((byte) Integer.parseInt(value[0], 16));
             return true;
         }, extendingToken, "INSERT_HEX");
@@ -240,15 +261,15 @@ public class StandardCompiler extends ExtendableCompiler {
         tokenPointer++;
         currentToken = compilerTokens.get(tokenPointer);
 
-        StackObject stackObject = getCurrentStackObject();
+        StackObject currentStackObject = getCurrentStackObject();
 
         final String[] value = {new String(currentToken)};
 
         boolean self = value[0].equals("SELF");
         if (!abstractExtension && self) throw new Exception(STR."SELF may not be referenced in non-abstract extensional.");
 
-        stackObject.pushStack(() -> {
-            if (self) value[0] = tokenizedProgram[programPointer];
+        currentStackObject.pushStack(() -> {
+            if (self) value[0] = currentStackObject.selfValue;
             for (char c : value[0].toCharArray()) compiledBytecode.add((byte) c);
             return true;
         }, extendingToken, "INSERT_UTF_8");

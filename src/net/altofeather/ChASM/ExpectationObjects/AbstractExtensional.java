@@ -14,6 +14,8 @@ public class AbstractExtensional extends Expectation {
     @Override
     public boolean check(char[] programToken) throws Exception {
 
+        this.extensional.selfValue = new String(programToken);
+
         boolean out = false;
 
         if (this.extensional.positiveSyntax == null && this.extensional.negativeSyntax == null) out = true;

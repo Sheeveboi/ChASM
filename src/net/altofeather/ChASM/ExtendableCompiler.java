@@ -98,6 +98,7 @@ public class ExtendableCompiler {
         StandardCompiler.registerImplementation("PROGRAM EXTENSION NAME: ", StandardCompiler::_PROGRAM_EXTENSION_NAME);
         StandardCompiler.registerImplementation("POSITIVE SYNTAX ", StandardCompiler::_POSITIVE_SYNTAX);
         StandardCompiler.registerImplementation("NEGATIVE SYNTAX ", StandardCompiler::_NEGATIVE_SYNTAX);
+        StandardCompiler.registerImplementation("EXTRACT ", StandardCompiler::_EXTRACT);
 
         ArrayList<char[]> realTokens = new ArrayList<>(operationMap.keySet());
 
@@ -128,6 +129,7 @@ public class ExtendableCompiler {
                 if (Arrays.equals(key, token)){
                     System.out.println(STR."running extension: \{new String(token)}");
                     StackObject copiedStackProgram = extensions.get(key);
+                    copiedStackProgram.selfValue = new String(token);
                     while (!copiedStackProgram.runOperation());
                     break;
                 }
