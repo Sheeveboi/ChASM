@@ -136,7 +136,7 @@ public class StandardCompiler extends ExtendableCompiler {
 
     }
 
-    protected static void _INSERT_FLOAT() {
+    protected static void _INSERT_FLOAT() throws Exception {
 
         System.out.println(STR."\{new String(extendingToken)} will insert a float");
 
@@ -145,14 +145,20 @@ public class StandardCompiler extends ExtendableCompiler {
 
         StackObject currentStackObject = getCurrentStackObject();
 
-        String value = new String(currentToken);
+        final String[] value = {new String(currentToken)};
+
+        if (value[0].equals("SELF")) {
+            if (!abstractExtension) throw new Exception(STR."SELF may not be referenced in non-abstract extensional.");
+            value[0] = "SELF";
+        }
 
         currentStackObject.pushStack(() -> {
 
             ArrayList<Byte> out = new ArrayList<>();
 
             //encode value
-            int intBits = Float.floatToIntBits(Float.parseFloat(value));
+            if (value[0].equals("SELF")) value[0] = tokenizedProgram[programPointer];
+            int intBits = Float.floatToIntBits(Float.parseFloat(value[0]));
 
             out.add((byte) (intBits >> 24));
             out.add((byte) (intBits >> 16));
@@ -166,7 +172,7 @@ public class StandardCompiler extends ExtendableCompiler {
 
     }
 
-    protected static void _INSERT_INTEGER() {
+    protected static void _INSERT_INTEGER() throws Exception {
 
         System.out.println(STR."\{new String(extendingToken)} will insert an integer");
 
@@ -175,10 +181,16 @@ public class StandardCompiler extends ExtendableCompiler {
 
         StackObject currentStackObject = getCurrentStackObject();
 
-        String value = new String(currentToken);
+        final String[] value = {new String(currentToken)};
+
+        if (value[0].equals("SELF")) {
+            if (!abstractExtension) throw new Exception(STR."SELF may not be referenced in non-abstract extensional.");
+            value[0] = "SELF";
+        }
 
         currentStackObject.pushStack(() -> {
-            compiledBytecode.add((byte) Integer.parseInt(value));
+            if (value[0].equals("SELF")) value[0] = tokenizedProgram[programPointer];
+            compiledBytecode.add((byte) Integer.parseInt(value[0]));
             return true;
         }, extendingToken, "INSERT_INTEGER");
 
@@ -186,23 +198,29 @@ public class StandardCompiler extends ExtendableCompiler {
 
     }
 
-    protected static void _INSERT_HEX() {
+    protected static void _INSERT_HEX() throws Exception {
 
         tokenPointer++;
         currentToken = compilerTokens.get(tokenPointer);
 
         StackObject stackObject = getCurrentStackObject();
 
-        String value = new String(currentToken);
+        final String[] value = {new String(currentToken)};
+
+        if (value[0].equals("SELF")) {
+            if (!abstractExtension) throw new Exception(STR."SELF may not be referenced in non-abstract extensional.");
+            value[0] = "SELF";
+        }
 
         stackObject.pushStack(() -> {
-            compiledBytecode.add((byte) Integer.parseInt(value, 16));
+            if (value[0].equals("SELF")) value[0] = tokenizedProgram[programPointer];
+            compiledBytecode.add((byte) Integer.parseInt(value[0], 16));
             return true;
         }, extendingToken, "INSERT_HEX");
 
     }
 
-    protected static void _INSERT_UTF_8() {
+    protected static void _INSERT_UTF_8() throws Exception {
 
         System.out.println("inserting utf8");
 
@@ -211,10 +229,16 @@ public class StandardCompiler extends ExtendableCompiler {
 
         StackObject stackObject = getCurrentStackObject();
 
-        String value = new String(currentToken);
+        final String[] value = {new String(currentToken)};
+
+        if (value[0].equals("SELF")) {
+            if (!abstractExtension) throw new Exception(STR."SELF may not be referenced in non-abstract extensional.");
+            value[0] = "SELF";
+        }
 
         stackObject.pushStack(() -> {
-            for (char c : value.toCharArray()) compiledBytecode.add((byte) c);
+            if (value[0].equals("SELF")) value[0] = tokenizedProgram[programPointer];
+            for (char c : value[0].toCharArray()) compiledBytecode.add((byte) c);
             return true;
         }, extendingToken, "INSERT_UTF_8");
 
