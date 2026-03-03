@@ -1,5 +1,7 @@
 package net.altofeather.ChASM;
 
+import net.altofeather.ChASM.ExpectationObjects.Expectation;
+
 import java.util.ArrayList;
 
 public class StackObject {

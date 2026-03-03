@@ -1,5 +1,7 @@
 package net.altofeather.ChASM;
 
+import net.altofeather.ChASM.ExpectationObjects.Expectation;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -17,6 +19,7 @@ public class StandardCompiler extends ExtendableCompiler {
         
         ArrayList<char[]> expectationTokens = new ArrayList<>();
 
+        //gather raw tokens here
         for (tokenPointer++; tokenPointer < compilerTokens.size(); tokenPointer++) {
 
             char[] token = compilerTokens.get(tokenPointer);
@@ -29,21 +32,14 @@ public class StandardCompiler extends ExtendableCompiler {
 
         StackObject currentStackObject = getCurrentStackObject();
 
+        //parse and build expectations
         for (char[] expectation : expectationTokens) {
 
-            if (getExtension(expectation) != null)
-                currentStackObject.expectations.add(
-                    new Expectation(Expectation.ExpectationType.EXTENSIONAL, expectation));
+            Expectation fullExpectation = Expectation.generateExpectation(expectation, false);
 
-            else if (getAbstractExtension(expectation) != null)
-                currentStackObject.expectations.add(
-                    new Expectation(Expectation.ExpectationType.ABSTRACT_EXTENSIONAL, expectation));
+            if (fullExpectation == null) throw new Exception("Expectation not the name of any Extensional, Abstract Extensional, or Group");
 
-            else if (getExtensionalGroup(expectation) != null)
-                currentStackObject.expectations.add(
-                    new Expectation(Expectation.ExpectationType.EXTENSIONAL_GROUP, expectation));
-
-            else throw new Exception("Expectation not the name of any Extensional, Abstract Extensional, or Group");
+            currentStackObject.expectations.add(fullExpectation);
 
         }
 
@@ -51,30 +47,16 @@ public class StandardCompiler extends ExtendableCompiler {
 
             for (int expectationIndex = 0; expectationIndex < currentStackObject.expectations.size(); expectationIndex++) {
 
-                int fakeProgramPointer = programPointer + expectationIndex + 1;
+                programPointer = programPointer + expectationIndex + 1;
                 Expectation expectation = currentStackObject.expectations.get(expectationIndex);
 
-                if (fakeProgramPointer >= tokenizedProgram.length) throw new Exception("Syntax Error: Unexpected end of program");
+                if (programPointer >= tokenizedProgram.length) throw new Exception("Syntax Error: Unexpected end of program");
 
-                char[] programToken = tokenizedProgram[fakeProgramPointer].toCharArray();
+                char[] programToken = tokenizedProgram[programPointer].toCharArray();
 
-                System.out.println(STR."checking for \{new String(programToken)}");
+                System.out.println(STR."checking \{new String(programToken)} (expecting \{new String(expectation.name)})");
 
-                switch (expectation.type) {
-
-                    case EXTENSIONAL -> {
-                        if (!Arrays.equals(programToken, expectation.name)) throw new Exception(STR."Syntax Error: Unexpected token '\{new String(programToken)}'");
-                    }
-
-                    case ABSTRACT_EXTENSIONAL -> {
-
-                    }
-
-                    case EXTENSIONAL_GROUP -> {
-
-                    }
-
-                }
+                if (!expectation.check(programToken)) throw new Exception("Syntax Error: Unexpected Token");
 
                 System.out.println(expectationIndex);
 
