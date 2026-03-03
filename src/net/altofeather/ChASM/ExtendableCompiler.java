@@ -113,7 +113,6 @@ public class ExtendableCompiler {
     public ExtendableCompiler(char[] program) throws Exception {
 
         StandardCompiler.registerImplementation(";", () -> {});
-        StandardCompiler.registerImplementation(" ", () -> {});
 
         StandardCompiler.registerImplementation("EXPECT", StandardCompiler::_EXPECT);
         StandardCompiler.registerImplementation("ABSTRACT EXTEND", StandardCompiler::_ABSTRACT_EXTEND);
