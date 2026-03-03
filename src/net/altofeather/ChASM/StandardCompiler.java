@@ -147,17 +147,15 @@ public class StandardCompiler extends ExtendableCompiler {
 
         final String[] value = {new String(currentToken)};
 
-        if (value[0].equals("SELF")) {
-            if (!abstractExtension) throw new Exception(STR."SELF may not be referenced in non-abstract extensional.");
-            value[0] = "SELF";
-        }
+        boolean self = value[0].equals("SELF");
+        if (!abstractExtension && self) throw new Exception(STR."SELF may not be referenced in non-abstract extensional.");
 
         currentStackObject.pushStack(() -> {
 
             ArrayList<Byte> out = new ArrayList<>();
 
             //encode value
-            if (value[0].equals("SELF")) value[0] = tokenizedProgram[programPointer];
+            if (self) value[0] = tokenizedProgram[programPointer];
             int intBits = Float.floatToIntBits(Float.parseFloat(value[0]));
 
             out.add((byte) (intBits >> 24));
@@ -183,18 +181,14 @@ public class StandardCompiler extends ExtendableCompiler {
 
         final String[] value = {new String(currentToken)};
 
-        if (value[0].equals("SELF")) {
-            if (!abstractExtension) throw new Exception(STR."SELF may not be referenced in non-abstract extensional.");
-            value[0] = "SELF";
-        }
+        boolean self = value[0].equals("SELF");
+        if (!abstractExtension && self) throw new Exception(STR."SELF may not be referenced in non-abstract extensional.");
 
         currentStackObject.pushStack(() -> {
-            if (value[0].equals("SELF")) value[0] = tokenizedProgram[programPointer];
+            if (self) value[0] = tokenizedProgram[programPointer];
             compiledBytecode.add((byte) Integer.parseInt(value[0]));
             return true;
         }, extendingToken, "INSERT_INTEGER");
-
-        //System.out.println(STR."stack size of current: \{currentStackObject.getStackSize()}");
 
     }
 
@@ -207,13 +201,11 @@ public class StandardCompiler extends ExtendableCompiler {
 
         final String[] value = {new String(currentToken)};
 
-        if (value[0].equals("SELF")) {
-            if (!abstractExtension) throw new Exception(STR."SELF may not be referenced in non-abstract extensional.");
-            value[0] = "SELF";
-        }
+        boolean self = value[0].equals("SELF");
+        if (!abstractExtension && self) throw new Exception(STR."SELF may not be referenced in non-abstract extensional.");
 
         stackObject.pushStack(() -> {
-            if (value[0].equals("SELF")) value[0] = tokenizedProgram[programPointer];
+            if (self) value[0] = tokenizedProgram[programPointer];
             compiledBytecode.add((byte) Integer.parseInt(value[0], 16));
             return true;
         }, extendingToken, "INSERT_HEX");
@@ -231,14 +223,15 @@ public class StandardCompiler extends ExtendableCompiler {
 
         final String[] value = {new String(currentToken)};
 
-        if (value[0].equals("SELF")) {
-            if (!abstractExtension) throw new Exception(STR."SELF may not be referenced in non-abstract extensional.");
-            value[0] = "SELF";
-        }
+        System.out.println(value[0]);
+
+        boolean self = value[0].equals("SELF");
+        if (!abstractExtension && self) throw new Exception(STR."SELF may not be referenced in non-abstract extensional.");
 
         stackObject.pushStack(() -> {
-            if (value[0].equals("SELF")) value[0] = tokenizedProgram[programPointer];
+            if (self) value[0] = tokenizedProgram[programPointer];
             for (char c : value[0].toCharArray()) compiledBytecode.add((byte) c);
+            System.out.println(compiledBytecode);
             return true;
         }, extendingToken, "INSERT_UTF_8");
 
